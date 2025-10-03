@@ -1,2 +1,5 @@
-infra/.terraform
+infra/.terraform/
 infra/.terraform.lock.hcl
+bin/
+terraform.tfstate
+.idea
