@@ -1,10 +1,17 @@
 data "aws_availability_zones" "available" {
   state = "available"
 }
-variable "aws_region" {
-  description = "AWS region for resource deployment"
+variable "execution_role_arn" {
+  description = "IAM role "
+  type = string
+}
+variable "aws_route53_zone_id" {
+  description = "AWS route53 zone id"
   type        = string
-  default     = "eu-central-1"
+}
+variable "role" {
+  description = "Failover role"
+  type        = string
 }
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
