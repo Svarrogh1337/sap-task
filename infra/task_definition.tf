@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "default" {
   container_definitions = jsonencode([
     {
       name         = var.project_name
-      image        = "${aws_ecr_repository.app.repository_url}:amd64"
+      image        = "${aws_ecr_repository.app.repository_url}:go-app"
       cpu          = var.cpu_units
       memory       = var.memory
       essential    = true
