@@ -15,6 +15,7 @@ The infrastructure consists of:
 - **Application Load Balancer**: Traffic distribution across ECS tasks
 - **Route53**: DNS management with failover routing policy
 - **VPC**: Isolated network environments with dedicated CIDR blocks
+- **RDS Database**: MySQL 8.0 database with multi-AZ support (optional)
 - **Auto Scaling**: Dynamic scaling based on CPU and memory metrics
 - **CloudWatch**: Monitoring and logging
 
@@ -42,11 +43,13 @@ The infrastructure consists of:
 │           ├── network.tf   # VPC, subnets, security groups
 │           ├── route53.tf   # DNS records
 │           ├── service.tf   # ECS service
+│           ├── db.tf        # RDS database configuration
 │           ├── task_definition.tf
 │           ├── cloudwatch.tf
 │           └── variables.tf
 ├── images/                  # Architecture diagrams
 ├── Makefile                 # Build and deployment automation
+├── Dockerfile               # Root Dockerfile
 └── README.md               # This file
 ```
 
@@ -81,6 +84,16 @@ The infrastructure consists of:
     - Memory: 512 MB
     - Container Port: 80
 
+### Database Configuration
+- **Engine**: MySQL 8.0
+- **Instance Class**: db.t3.micro
+- **Storage**: 10 GB allocated storage
+- **Username**: admin
+- **Password**: Auto-generated (16 characters with special characters)
+- **Deployment**: Optional (controlled by variable) `deploy_db`
+- **Subnet Group**: Dedicated DB subnet group spanning 2 availability zones
+- **Security**: Isolated in private subnets
+
 ### Auto Scaling Targets
 
 - **CPU Target**: 70%
@@ -100,7 +113,9 @@ aws_route53_zone_id   = "<ZONE_ID>"        # Pre-existing Route53 zone ID
 
 ### Optional Variables
 
-All optional variables have sensible defaults. See `infra/variables.tf` for the complete list.
+```hcl
+deploy_db             = false              # Enable/disable RDS database deployment
+```
 
 ## Deployment
 ### E2E Deployment
@@ -139,6 +154,15 @@ The application is a Go-based web service that runs on port 80. It's containeriz
 ```bash
 make app-build
 ```
+## Database Access
+When is enabled: `deploy_db`
+1. Database password is auto-generated and stored in Terraform state
+2. Database is deployed in private subnets across 2 availability zones
+3. Access is controlled via security groups
+4. Database name format: `{project_name}db` (hyphens removed)
+
+**Security Note**: The database uses for easier development. For production, this should be set to and a proper backup strategy should be implemented. `skip_final_snapshot = true``false`
+
 
 ## Monitoring
 
