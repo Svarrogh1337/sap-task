@@ -1,4 +1,4 @@
-name: Apply terraform plan
+name: Destroy terraform plan
 
 on:
   workflow_dispatch:
