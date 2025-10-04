@@ -6,7 +6,7 @@ $(LOCALBIN):
 # -- Globals
 ####################
 OS                ?= $(shell uname | tr '[:upper:]' '[:lower:]')
-ARCH              ?= $(shell arch)
+ARCH              ?= $(shell uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
 ####################
 # -- Terraform
 ####################

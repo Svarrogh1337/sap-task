@@ -8,6 +8,9 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+provider "aws" {
+  region = "eu-central-1"
+}
 module "ecs-primary" {
   deploy_db          = true
   app_dns            = "app.${var.domain_name}"
