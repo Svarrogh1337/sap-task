@@ -23,6 +23,12 @@ The infrastructure consists of:
 
 ```text
 .
+├── .github/
+│   └── workflows/           # GitHub Actions workflows
+│       ├── apply.yml        # Manual infrastructure deployment
+│       ├── plan.yml         # Automated PR terraform plans
+│       ├── lint.yml         # Terraform validation and formatting checks
+│       └── fix_formating.yml # Auto-fix terraform formatting on main
 ├── app/                      # Go application source code
 │   ├── main.go              # Application entry point
 │   ├── models/              # Data models
@@ -120,19 +126,26 @@ deploy_db_secondary           = false              # Enable/disable RDS database
 ```
 
 ## Deployment
-### E2E Deployment
+### Automated Deployment
+Automated deployment is done via [Workflow Dispatch](https://github.com/Svarrogh1337/sap-task/actions/workflows/apply.yml).
+### Development Deployment
+Following prerequisite steps are required:
+- AWSCLI configured with appropriate credentials
+- Docker installed
+- Make installed
+#### E2E Deployment
 
 ```bash
 make e2e-deploy
 ```
 
-### Apply Infrastructure only
+#### Apply Infrastructure only
 
 ```bash
 make apply
 ```
 
-### Destroy Infrastructure
+#### Destroy Infrastructure
 
 ```bash
 make destroy
