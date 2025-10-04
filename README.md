@@ -133,6 +133,9 @@ Following prerequisite steps are required:
 - AWSCLI configured with appropriate credentials
 - Docker installed
 - Make installed
+- Route53 zone created
+  - domain_name variable set in infra/variables.tf
+  - hosted_zone_id variable set in infra/variables.tf
 #### E2E Deployment
 
 ```bash
