@@ -7,8 +7,8 @@ resource "aws_vpc" "infra" {
   }
 }
 resource "aws_subnet" "db" {
-  count = var.deploy_db ? 2 : 0
-  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, count.index+250)
+  count             = var.deploy_db ? 2 : 0
+  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, count.index + 250)
   availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id            = aws_vpc.infra.id
 
@@ -128,7 +128,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name     = "${var.project_name}-private-rt-${count.index}"
+    Name = "${var.project_name}-private-rt-${count.index}"
   }
 }
 

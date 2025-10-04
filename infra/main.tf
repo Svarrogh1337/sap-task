@@ -1,5 +1,5 @@
 provider "aws" {
-  alias = "euc1"
+  alias  = "euc1"
   region = "eu-central-1"
 }
 
@@ -9,12 +9,12 @@ provider "aws" {
 }
 
 module "ecs-primary" {
-  deploy_db = true
-  app_dns = "app.${var.domain_name}"
-  vpc_cidr_block = "10.0.0.0/16"
-  execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
-  project_name = "sap-infra-primary"
-  source = "./modules/ecs"
+  deploy_db          = true
+  app_dns            = "app.${var.domain_name}"
+  vpc_cidr_block     = "10.0.0.0/16"
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  project_name       = "sap-infra-primary"
+  source             = "./modules/ecs"
   providers = {
     aws = aws.euc1
   }
@@ -23,12 +23,12 @@ module "ecs-primary" {
 }
 
 module "ecs-secondary" {
-  deploy_db = false
-  app_dns = "app.${var.domain_name}"
-  vpc_cidr_block = "10.1.0.0/16"
-  execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
-  project_name = "sap-infra-secondary"
-  source = "./modules/ecs"
+  deploy_db          = false
+  app_dns            = "app.${var.domain_name}"
+  vpc_cidr_block     = "10.1.0.0/16"
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  project_name       = "sap-infra-secondary"
+  source             = "./modules/ecs"
   providers = {
     aws = aws.euw2
   }

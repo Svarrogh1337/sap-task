@@ -5,7 +5,7 @@ resource "random_password" "password" {
 }
 
 resource "aws_db_instance" "default" {
-  count = var.deploy_db ? 1 : 0
+  count                = var.deploy_db ? 1 : 0
   allocated_storage    = 10
   db_name              = "${replace(var.project_name, "-", "")}db"
   db_subnet_group_name = aws_db_subnet_group.db-subnet.name

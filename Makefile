@@ -26,7 +26,8 @@ apply: terraform init
 	$(TERRAFORM) -chdir=infra apply -auto-approve -lock=false
 destroy: terraform init
 	$(TERRAFORM) -chdir=infra destroy -auto-approve -lock=false
-
+fmt: terraform
+	$(TERRAFORM) -chdir=infra fmt -recursive
 ####################
 # -- App build
 ####################

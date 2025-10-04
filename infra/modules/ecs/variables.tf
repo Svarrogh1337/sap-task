@@ -8,7 +8,7 @@ variable "app_dns" {
 
 variable "execution_role_arn" {
   description = "IAM role "
-  type = string
+  type        = string
 }
 variable "aws_route53_zone_id" {
   description = "AWS route53 zone id"

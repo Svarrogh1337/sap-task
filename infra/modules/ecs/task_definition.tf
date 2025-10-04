@@ -9,11 +9,11 @@ resource "aws_ecs_task_definition" "default" {
 
   container_definitions = jsonencode([
     {
-      name         = var.project_name
-      image        = "${aws_ecr_repository.app.repository_url}:go-app"
-      cpu          = var.cpu_units
-      memory       = var.memory
-      essential    = true
+      name      = var.project_name
+      image     = "${aws_ecr_repository.app.repository_url}:go-app"
+      cpu       = var.cpu_units
+      memory    = var.memory
+      essential = true
       portMappings = [
         {
           containerPort = var.container_port
@@ -23,7 +23,7 @@ resource "aws_ecs_task_definition" "default" {
       ]
       logConfiguration = {
         logDriver = "awslogs"
-        options   = {
+        options = {
           "awslogs-group"         = aws_cloudwatch_log_group.log_group.name
           "awslogs-region"        = data.aws_region.current.name
           "awslogs-stream-prefix" = "${var.project_name}-log-stream"
