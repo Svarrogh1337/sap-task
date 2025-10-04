@@ -9,6 +9,7 @@ provider "aws" {
 }
 
 module "ecs-primary" {
+  deploy_db = false
   app_dns = "app.${var.domain_name}"
   vpc_cidr_block = "10.0.0.0/16"
   execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
@@ -34,4 +35,3 @@ module "ecs-secondary" {
   aws_route53_zone_id = var.hosted_zone_id
   role                = "SECONDARY"
 }
-
