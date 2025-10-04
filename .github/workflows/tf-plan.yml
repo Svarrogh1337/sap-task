@@ -38,14 +38,6 @@ jobs:
         with:
           terraform_version: 1.13.2
 
-      - name: Terraform init
-        id: init
-        run: make init
-
-      - name: Terraform format
-        id: fmt
-        run: make fmt
-
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
