@@ -114,7 +114,9 @@ aws_route53_zone_id   = "<ZONE_ID>"        # Pre-existing Route53 zone ID
 ### Optional Variables
 
 ```hcl
-deploy_db             = false              # Enable/disable RDS database deployment
+deploy_db_primary             = true              # Enable/disable RDS database deployment
+deploy_db_secondary           = false              # Enable/disable RDS database deployment
+
 ```
 
 ## Deployment

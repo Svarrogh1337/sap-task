@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 module "ecs-primary" {
-  deploy_db = false
+  deploy_db = true
   app_dns = "app.${var.domain_name}"
   vpc_cidr_block = "10.0.0.0/16"
   execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
@@ -23,6 +23,7 @@ module "ecs-primary" {
 }
 
 module "ecs-secondary" {
+  deploy_db = false
   app_dns = "app.${var.domain_name}"
   vpc_cidr_block = "10.1.0.0/16"
   execution_role_arn      = aws_iam_role.ecs_task_execution_role.arn
