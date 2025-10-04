@@ -48,6 +48,7 @@ resource "aws_alb_target_group" "service_target_group" {
 
   depends_on = [aws_alb.alb]
 }
+
 output "lb_dns_name" {
   value = aws_alb.alb.dns_name
 }

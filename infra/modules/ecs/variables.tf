@@ -22,6 +22,13 @@ variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
 }
+
+variable "deploy_db" {
+  description = "CIDR block for the DB VPC"
+  type        = bool
+  default     = false
+}
+
 variable "project_name" {
   description = "Name of the project"
   type        = string

@@ -6,7 +6,20 @@ resource "aws_vpc" "infra" {
     Name = "${var.project_name}-vpc"
   }
 }
+resource "aws_subnet" "db" {
+  count = var.deploy_db ? 2 : 0
+  cidr_block        = cidrsubnet(var.vpc_cidr_block, 8, count.index+250)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  vpc_id            = aws_vpc.infra.id
 
+  tags = {
+    Name = "${var.project_name}-db-subnet"
+  }
+}
+resource "aws_db_subnet_group" "db-subnet" {
+  name       = "db subnet group"
+  subnet_ids = aws_subnet.private.*.id
+}
 resource "aws_internet_gateway" "public" {
   vpc_id = aws_vpc.infra.id
   tags = {
