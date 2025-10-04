@@ -14,7 +14,7 @@ terraform:
 	(curl -sSL https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_$(OS)_$(ARCH).zip -o terraform.zip && \
 	unzip terraform.zip 'terraform' -d $(LOCALBIN) && \
 	rm -f terraform.zip);
-.PHONY: terraform init plan apply destroy docker-build docker-login docker-push app-build test-curl docs
+.PHONY: terraform init plan apply destroy docker-build docker-login docker-push app-build test-curl docs e2e-deploy
 init: terraform
 	$(TERRAFORM) -chdir=infra init -migrate-state
 plan: terraform init
@@ -44,7 +44,7 @@ docker-build:
 ####################
 # -- E2E setup
 ####################
-e2e-build: apply app-build
+e2e-deploy: apply app-build
 
 ####################
 # -- Test

@@ -47,7 +47,6 @@ The infrastructure consists of:
 │           └── variables.tf
 ├── images/                  # Architecture diagrams
 ├── Makefile                 # Build and deployment automation
-├── Dockerfile               # Root Dockerfile
 └── README.md               # This file
 ```
 
@@ -122,13 +121,19 @@ terraform plan
 ### Apply Infrastructure
 
 ```bash
-terraform apply
+make apply
+```
+
+### E2E Deployment
+
+```bash
+make e2e-deploy
 ```
 
 ### Destroy Infrastructure
 
 ```bash
-terraform destroy
+make destroy
 ```
 
 ## Backend Configuration
@@ -147,15 +152,7 @@ The application is a Go-based web service that runs on port 80. It's containeriz
 ### Building the Application
 
 ```bash
-cd app
-go build -o main .
-```
-
-### Running Locally
-
-```bash
-cd app
-go run main.go
+make app-build
 ```
 
 ## Monitoring
