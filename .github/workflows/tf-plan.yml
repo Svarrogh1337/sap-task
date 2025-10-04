@@ -33,11 +33,6 @@ jobs:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
 
-      - name: Setup Terraform with specified version on the runner
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.13.2
-
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
@@ -47,7 +42,7 @@ jobs:
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}\n${{ steps.plan.outputs.stderr }}\n${{ steps.plan.outputs }}"
         with:
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
