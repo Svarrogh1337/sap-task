@@ -1,75 +1,22 @@
-name: "Terraform Infrastructure Change Management Pipeline with GitHub Actions"
+name: Create terraform plan
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - infra/**
-  pull_request:
-    branches:
-      - main
-    paths:
-      - infra/**
+on: [pull_request]
 
-env:
-  # verbosity setting for Terraform logs
-  TF_LOG: INFO
-  # Credentials for deployment to AWS
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
-  terraform:
-    name: "Terraform Infrastructure Change Management"
+  plan:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        # We keep Terraform files in the terraform directory.
-        working-directory: .
-
+    name: Create a plan for an example terraform configuration
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout the repository to the runner
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Terraform plan
-        id: plan
-        if: github.event_name == 'pull_request'
-        run: make plan
-        continue-on-error: true
-
-      - uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
-        env:
-          PLAN: "terraform\n${{ steps.plan.outputs.out }}"
+      - name: terraform plan
+        uses: dflook/terraform-plan@v2
         with:
-          script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
-            <details><summary>Show Plan</summary>
-            
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
-            
-            </details>
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-
-      - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
-        run: exit 1
-
-#      - name: Terraform Apply
-#        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-#        run: terraform apply -auto-approve -input=false
+          path: ./infra
