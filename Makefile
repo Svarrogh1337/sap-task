@@ -14,7 +14,7 @@ terraform:
 	(curl -sSL https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_$(OS)_$(ARCH).zip -o terraform.zip && \
 	unzip terraform.zip 'terraform' -d $(LOCALBIN) && \
 	rm -f terraform.zip);
-.PHONY: terraform init plan apply destroy docker-build docker-login docker-push app-build test-curl
+.PHONY: terraform init plan apply destroy docker-build docker-login docker-push app-build test-curl docs
 init: terraform
 	$(TERRAFORM) -chdir=infra init -migrate-state
 plan: terraform init
@@ -51,3 +51,19 @@ e2e-build: apply app-build
 ####################
 test-curl:
 	@for ((i=1;i<=100000;i++)); do curl http://app.eko.dev/health; echo; done
+
+####################
+# -- Docs
+####################
+TERRAFORM-DOCS         := $(LOCALBIN)/terraform-docs
+TERRAFORM-DOCS_VERSION := v0.20.0
+OS                ?= $(shell uname | tr '[:upper:]' '[:lower:]')
+ARCH              ?= $(shell arch)
+docs:
+	@test -s $(TERRAFORM-DOCS) && $(TERRAFORM-DOCS) --version | grep -q $(TERRAFORM-DOCS_VERSION) || \
+	(curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.20.0/terraform-docs-v0.20.0-$(OS)-$(ARCH).tar.gz && \
+	tar -xzf terraform-docs.tar.gz -C $(LOCALBIN) terraform-docs && \
+	rm -f terraform-docs.tar.gz);
+generate-docs: docs
+	$(TERRAFORM-DOCS) markdown table --output-file README.md --output-mode inject infra/modules/ecs
+
