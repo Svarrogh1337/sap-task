@@ -95,7 +95,6 @@ The infrastructure consists of:
 
 ```hcl
 domain_name           = "eko.dev"           # Domain name for Route53
-execution_role_arn    = "<IAM_ROLE_ARN>"   # ECS task execution role
 aws_route53_zone_id   = "<ZONE_ID>"        # Route53 zone ID
 ```
 
@@ -175,5 +174,5 @@ The infrastructure implements several HA strategies:
 ## Security
 - VPC isolation with public and private subnets
 - Security groups restricting traffic
-- IAM roles with least privilege access
+- IAM roles with the least privilege access
 - Container image scanning via ECR
