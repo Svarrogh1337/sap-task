@@ -103,7 +103,7 @@ The infrastructure consists of:
     - Maximum Percent: 100%
 
 ## Configuration
-
+All configuration is done via Terraform variables in `infra/variables.tf`.
 ### Required Variables
 
 ```hcl
