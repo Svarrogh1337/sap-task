@@ -94,8 +94,8 @@ The infrastructure consists of:
 ### Required Variables
 
 ```hcl
-domain_name           = "eko.dev"           # Domain name for Route53
-aws_route53_zone_id   = "<ZONE_ID>"        # Route53 zone ID
+domain_name           = "eko.dev"          # Domain name for Route53
+aws_route53_zone_id   = "<ZONE_ID>"        # Pre-existing Route53 zone ID
 ```
 
 ### Optional Variables
