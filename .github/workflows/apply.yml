@@ -22,4 +22,4 @@ jobs:
       - name: terraform apply
         uses: dflook/terraform-apply@v2
         with:
-          path: my-terraform-config
+          path: ./infra
