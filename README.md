@@ -103,30 +103,16 @@ aws_route53_zone_id   = "<ZONE_ID>"        # Route53 zone ID
 All optional variables have sensible defaults. See `infra/variables.tf` for the complete list.
 
 ## Deployment
-
-### Initialize Terraform
-
-```bash
-cd infra
-terraform init
-```
-
-### Plan Infrastructure
-
-```bash
-terraform plan
-```
-
-### Apply Infrastructure
-
-```bash
-make apply
-```
-
 ### E2E Deployment
 
 ```bash
 make e2e-deploy
+```
+
+### Apply Infrastructure only
+
+```bash
+make apply
 ```
 
 ### Destroy Infrastructure
