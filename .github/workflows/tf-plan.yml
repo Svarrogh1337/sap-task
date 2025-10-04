@@ -40,20 +40,16 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init
+        run: make init
 
       - name: Terraform format
         id: fmt
-        run: terraform fmt -check
-
-      - name: Terraform validate
-        id: validate
-        run: terraform validate
+        run: make fmt
 
       - name: Terraform plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false
+        run: make plan
         continue-on-error: true
 
       - uses: actions/github-script@v6
