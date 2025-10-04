@@ -14,7 +14,6 @@ TERRAFORM         := $(LOCALBIN)/terraform
 TERRAFORM_VERSION := 1.13.3
 terraform:
 	@test -s $(TERRAFORM) && $(TERRAFORM) --version | grep -q $(TERRAFORM_VERSION) || \
-	echo https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_$(OS)_$(ARCH).zip -o terraform.zip && \
 	(curl -sSL https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_$(OS)_$(ARCH).zip -o terraform.zip && \
 	unzip terraform.zip 'terraform' -d $(LOCALBIN) && \
 	rm -f terraform.zip);
