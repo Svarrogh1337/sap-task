@@ -1,23 +1,11 @@
-name: Validate changes
+name: Lint
 
 on:
   push:
     branches-ignore:
-      - 'main'
+      - main
 
 jobs:
-  fmt-check:
-    runs-on: ubuntu-latest
-    name: Check formatting of terraform files
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: terraform fmt
-        uses: dflook/terraform-fmt-check@v2
-        with:
-          path: ./infra
-
   validate:
     runs-on: ubuntu-latest
     name: Validate terraform configuration
@@ -27,5 +15,17 @@ jobs:
 
       - name: terraform validate
         uses: dflook/terraform-validate@v2
+        with:
+          path: ./infra
+
+  fmt-check:
+    runs-on: ubuntu-latest
+    name: Check formatting of terraform files
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: terraform fmt
+        uses: dflook/terraform-fmt-check@v2
         with:
           path: ./infra
