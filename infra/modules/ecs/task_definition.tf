@@ -1,8 +1,9 @@
+data "aws_region" "current" {}
 resource "aws_ecs_task_definition" "default" {
   family                   = "${var.project_name}-ecs-task-def"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = var.execution_role_arn
   cpu                      = var.cpu_units
   memory                   = var.memory
 
@@ -24,7 +25,7 @@ resource "aws_ecs_task_definition" "default" {
         logDriver = "awslogs"
         options   = {
           "awslogs-group"         = aws_cloudwatch_log_group.log_group.name
-          "awslogs-region"        = var.aws_region
+          "awslogs-region"        = data.aws_region.current.name
           "awslogs-stream-prefix" = "${var.project_name}-log-stream"
         }
       }
