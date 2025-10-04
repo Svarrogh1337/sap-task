@@ -25,7 +25,6 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 resource "aws_iam_role" "ecs_task_iam_role" {
   name               = "ecs_task_iam_role"
   assume_role_policy = data.aws_iam_policy_document.task_assume_role_policy.json
-
   tags = {
     Name = "ecs_task_iam_role"
   }

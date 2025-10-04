@@ -1,6 +1,11 @@
 data "aws_availability_zones" "available" {
   state = "available"
 }
+variable "app_dns" {
+  description = "Domain name for the sample app"
+  type        = string
+}
+
 variable "execution_role_arn" {
   description = "IAM role "
   type = string
@@ -16,7 +21,6 @@ variable "role" {
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
-  default     = "10.0.0.0/16"
 }
 variable "project_name" {
   description = "Name of the project"
